@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controlles\" />
+    <Folder Include="EventHandlers\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Filtars\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="ViewDataLoad\" />
+  </ItemGroup>
+
+</Project>
