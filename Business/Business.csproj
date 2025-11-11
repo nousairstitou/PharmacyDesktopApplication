@@ -11,6 +11,7 @@
     <Folder Include="Mapper\" />
     <Folder Include="CachManagement\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Handlers\" />
     <Folder Include="Response\" />
     <Folder Include="Request\" />
     <Folder Include="Validation\" />

@@ -6,69 +6,67 @@ using System.Threading.Tasks;
 
 namespace Models {
 
-    public class SaleDetails {
+    public class PurchaseDetails {
 
-        // BillingId is generated automatically by the database
-        public int? BillingId { get; set; }
+        public int PurchaseDetailId { get; set; }
 
-        private int? _saleId;
-        public int? SaleId {
-
-            get => _saleId;
-
+        private int? _purchaseId;
+        public int? PurchaseId {
+ 
+            get => _purchaseId;
+ 
             set {
-
+ 
                 if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("SaleId must be a positive integer or null.");
-
-                _saleId = value;
+                    throw new ArgumentException("Purchase ID must be a positive integer or null.");
+ 
+                _purchaseId = value;
             }
         }
 
         private int? _medicineId;
         public int? MedicineId {
-
+ 
             get => _medicineId;
-
+ 
             set {
-
+ 
                 if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("MedicineId must be a positive integer or null.");
-
+                    throw new ArgumentException("Medicine ID must be a positive integer or null.");
+ 
                 _medicineId = value;
             }
         }
 
         private int _quantity;
         public int Quantity {
-
+ 
             get => _quantity;
-
+ 
             set {
-
-                 if (value <= 0)
-                    throw new ArgumentException("Quantity must be greater than zero.");
-
-
+ 
+                if (value <= 0)
+                    throw new ArgumentException("Quantity must be a positive integer.");
+ 
                 _quantity = value;
             }
         }
 
         private decimal _unitPrice;
         public decimal UnitPrice {
-
+ 
             get => _unitPrice;
-
+ 
             set {
-
+ 
                 if (value < 0)
-                    throw new ArgumentException("Unit Price must be positive.");
-                
+                    throw new ArgumentException("Unit Price cannot be negative.");
+ 
                 _unitPrice = value;
             }
         }
 
-        public Sale sale { get; private set; }
-        public Medicine medicine { get; private set; }
+        public Purchase Purchase { get; set; }
+        public Medicine Medicine { get; set; }
     }
 }

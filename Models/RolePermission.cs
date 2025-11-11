@@ -9,7 +9,7 @@ namespace Models{
     public class RolePermission {
 
         // RolePermissionId is generated automatically by the database
-        public int? RolePermissionId { get; private set; }
+        public int? RolePermissionId { get; set; }
         public int RoleId { get; private set; }
         public int PermissionId { get; private set; }
 

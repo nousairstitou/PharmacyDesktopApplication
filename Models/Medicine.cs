@@ -9,7 +9,7 @@ namespace Models {
     public class Medicine {
 
         // MedicineId is generated automatically by the database
-        public int MedicineId { get; private set; }
+        public int MedicineId { get; set; }
 
         private string _medicineName = string.Empty;
         public string MedicineName {

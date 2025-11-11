@@ -11,7 +11,7 @@ namespace Models {
     public class Person {
 
         // PersonId is generated automatically by the database
-        public int? PersonId { get; private set; }
+        public int? PersonId { get; set; }
 
         private int? _addressId;
         public int? AddressId {

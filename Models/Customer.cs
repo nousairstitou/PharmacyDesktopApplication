@@ -9,6 +9,6 @@ namespace Models {
     public class Customer : Person {
 
         // CustomerId is generated automatically by the database
-        public int? CustomerId { get; private set; }
+        public int? CustomerId { get; set; }
     }
 }

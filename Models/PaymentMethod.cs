@@ -9,7 +9,7 @@ namespace Models {
     public class PaymentMethod {
 
         // PaymentMethodId is generated automatically by the database
-        public int? PaymentMethodId { get; private set; }
+        public int? PaymentMethodId { get; set; }
 
         private string _methodName = string.Empty;
         public string MethodName {

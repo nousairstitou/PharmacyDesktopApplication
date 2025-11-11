@@ -8,7 +8,7 @@ namespace Models {
 
     public class Sale {
 
-        public int? SaleId { get; private set; }
+        public int? SaleId { get; set; }
 
         private int? _customerId;
         public int? CustomerId {

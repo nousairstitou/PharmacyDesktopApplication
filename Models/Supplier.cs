@@ -9,6 +9,6 @@ namespace Models {
     public class Supplier : Person {
 
         // SupplierId is generated automatically by the database
-        public int? SupplierId { get; private set; }
+        public int? SupplierId { get; set; }
     }
 }

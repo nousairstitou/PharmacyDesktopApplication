@@ -10,7 +10,7 @@ namespace Models {
    
     public class Payment {
 
-        public int? PaymentId { get; private set; }
+        public int? PaymentId { get; set; }
 
         private int? _saleId;
         public int? SaleId {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Abstract.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Data.Repositories {
 
-    public class CategoryRepository {
+    public class CategoryRepository : ICategoryRepository {
 
 
     }

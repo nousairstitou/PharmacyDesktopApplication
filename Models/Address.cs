@@ -9,7 +9,7 @@ namespace Models {
 
     public class Address {
 
-        public int? AddressId { get; private set; }
+        public int? AddressId { get; set; }
 
         private string? _city;
         public string? City {
@@ -60,7 +60,7 @@ namespace Models {
 
             set {
 
-                if (value.HasValue && value <= 0)
+                if (!value.HasValue && value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(DepartmentNumber), "Department Number must be positive if provided.");
                 
                 _departmentNumber = value;

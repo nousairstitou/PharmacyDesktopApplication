@@ -9,7 +9,7 @@ namespace Models {
     public class Billing {
 
         // BillingId is generated automatically by the database
-        public int? BillingId { get; private set; }
+        public int? BillingId { get; set; }
         
         private int? _saleId;
         public int? SaleId {

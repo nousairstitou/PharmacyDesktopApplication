@@ -10,7 +10,7 @@ namespace Models {
     public class User {
 
         // UserId is generated automatically by the database
-        public int UserId { get; private set; }
+        public int UserId { get;  set; }
 
         private int? _personId;
         public int? PersonId {

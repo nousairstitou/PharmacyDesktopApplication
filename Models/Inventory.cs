@@ -8,7 +8,7 @@ namespace Models {
 
     public class Inventory {
 
-        public int? InventoryId { get; private set; }
+        public int? InventoryId { get; set; }
 
         private string? _inventoryName;
         public string? InventoryName {
