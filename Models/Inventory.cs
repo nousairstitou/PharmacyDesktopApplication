@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace Models {
 
         public int? InventoryId { get; set; }
 
-        private string? _inventoryName;
-        public string? InventoryName {
+        private string _inventoryName = null!;
+        public string InventoryName {
 
             get => _inventoryName;
 
@@ -24,8 +25,8 @@ namespace Models {
             }
         }
 
-        private string? _location;
-        public string? Location {
+        private string _location = null!;
+        public string Location {
 
             get => _location;
 
@@ -51,5 +52,9 @@ namespace Models {
                 _capacity = value;
             }
         }
+
+        public bool IsDeleted { get; set; }
+        public DateTime CreatedAt { get; set; } 
+        public DateTime UpdatedAt { get; set; }
     }
 }

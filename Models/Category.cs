@@ -29,7 +29,7 @@ namespace Models {
         }
 
         public bool IsActive { get; set; }
-        public bool DeactivatedAt { get; set; }
+        public DateTime DeactivatedAt { get; set; }
 
         private DateTime _createdDate;
         public DateTime CreatedDate { 
@@ -72,7 +72,5 @@ namespace Models {
                 _description = value;
             }
         }
-
-
     }
 }

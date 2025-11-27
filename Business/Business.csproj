@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\Interfaces\" />
-    <Folder Include="Mapper\" />
-    <Folder Include="CachManagement\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Response\" />
-    <Folder Include="Request\" />
-    <Folder Include="Validation\" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Repositories\Repositories.csproj" />
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mapper\PaymentMapper\" />
+    <Folder Include="Services\PaymentService\" />
   </ItemGroup>
 
 </Project>

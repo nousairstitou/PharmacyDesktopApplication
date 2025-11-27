@@ -38,6 +38,34 @@ namespace Models {
             }
         }
 
+        private byte _status;
+        public byte Status {
+
+            get => _status;
+
+            set {
+
+                if(value < 0 || value > 3)
+                    throw new ArgumentOutOfRangeException(nameof(Status) ,"Status must be between 0 and 3.");
+
+                _status = value;
+            }
+        }
+
+        private string? _note;
+        public string? Note {
+
+            get => _note;
+
+            set {
+
+                if(value != null && value.Length > 255)
+                    throw new ArgumentOutOfRangeException(nameof(Note) ,"Note cannot exceed 255 characters.");
+
+                _note = value;
+            }
+        }
+
         private decimal _totalAmount;
         public decimal TotalAmount {
 
@@ -52,22 +80,8 @@ namespace Models {
             }
         }
 
-        private decimal _amountPaid;
-        public decimal AmountPaid {
-
-            get => _amountPaid;
-
-            set {
-
-                if (value <= 0)
-                    throw new ArgumentException(nameof(AmountPaid) ,"Amount Paid must be greater than zero.");
-
-                if (_totalAmount > 0 && value > _totalAmount)
-                    throw new ArgumentException(nameof(AmountPaid) ,"Amount Paid cannot exceed Total Amount.");
-
-                _amountPaid = value;
-            }
-        }
+        public bool IsDeleted { get; set; } = false;
+        public DateTime CreatedAt { get; set; }
 
         public Customer Customer { get; private set; }
     }

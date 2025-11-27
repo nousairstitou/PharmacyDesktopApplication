@@ -19,6 +19,7 @@ namespace Repositories.Data.Repositories {
             _databaseConnectionFactory = databaseConnectionFactory ?? throw new ArgumentNullException(nameof(databaseConnectionFactory));
         }
 
+        // GetList method to retrieve all records from a table
         protected async Task<IEnumerable<TResult>> GetList<TResult>(string query, Func<SqlDataReader, TResult> mapper) {
 
             var list = new List<TResult>();
@@ -32,7 +33,6 @@ namespace Repositories.Data.Repositories {
                     try {
 
                         await Connection.OpenAsync();
-
                         await using (var Reader = await Command.ExecuteReaderAsync()) {
 
                             while (await Reader.ReadAsync()) {
@@ -40,7 +40,6 @@ namespace Repositories.Data.Repositories {
                                 list.Add(mapper(Reader));
                             }
                         }
-
                     }
                     catch (Exception ex) {
 
@@ -53,6 +52,7 @@ namespace Repositories.Data.Repositories {
             return list;
         }
 
+        // GetListByValue method to retrieve a list of records based on a given condition
         protected async Task<IReadOnlyList<TResult>> GetListByValue<TResult>(string query, Func<SqlDataReader, TResult> mapper) {
 
             var list = new List<TResult>();
@@ -66,7 +66,6 @@ namespace Repositories.Data.Repositories {
                     try {
 
                         await Connection.OpenAsync();
-
                         await using (var Reader = await Command.ExecuteReaderAsync()) {
 
                             while (await Reader.ReadAsync()) {
@@ -87,6 +86,7 @@ namespace Repositories.Data.Repositories {
             return list;
         }
 
+        // GetByValue method to retrieve a single record based on a given condition
         protected virtual async Task<T?> GetByValue(string procedureName, string parameterName, object? ParameterValue, Func<SqlDataReader, T> Mapper) {
 
             await using (var Connection = _databaseConnectionFactory.CreateConnection()) {
@@ -94,7 +94,7 @@ namespace Repositories.Data.Repositories {
                 await using (var Command = new SqlCommand(procedureName, Connection)) {
 
                     Command.CommandType = CommandType.StoredProcedure;
-                    Command.Parameters.AddWithValue(parameterName, ParameterValue);
+                    Command.Parameters.AddWithValue(parameterName, ParameterValue ?? DBNull.Value);
 
                     try {
 
@@ -117,6 +117,7 @@ namespace Repositories.Data.Repositories {
             return null;
         }
 
+        // Insert method to add a new record and return the newly generated identifier
         protected virtual async Task<int?> Insert(string procedureName, string outputParameterName, Action<SqlCommand> parameterBuilder) {
 
             int? NewId = null;
@@ -154,6 +155,7 @@ namespace Repositories.Data.Repositories {
             return NewId;
         }
 
+        // Update method to modify an existing record based on a given condition
         protected virtual async Task<bool> Update(string procedureName, Action<SqlCommand> parameterBuilder) {
 
             int RowAffected = 0;
@@ -181,7 +183,8 @@ namespace Repositories.Data.Repositories {
             return RowAffected > 0;
         }
 
-        protected virtual async Task<bool> Delete(string procedureName, string parameterName, object parameterValue) {
+        // Delete method to remove a record based on a given condition
+        protected virtual async Task<bool> Delete(string procedureName, string parameterName, object ParameterValue) {
 
             int RowAffected = 0;
 
@@ -190,7 +193,7 @@ namespace Repositories.Data.Repositories {
                 await using (var Command = new SqlCommand(procedureName, Connection)) {
 
                     Command.CommandType = CommandType.StoredProcedure;
-                    Command.Parameters.AddWithValue(parameterName, parameterValue);
+                    Command.Parameters.AddWithValue(parameterName ,ParameterValue ?? DBNull.Value);
 
                     try {
 
@@ -209,7 +212,62 @@ namespace Repositories.Data.Repositories {
         }
 
         // Is Exist method to check if a record exists based on a given condition
+        protected virtual async Task<bool> IsExist(string procedureName, Action<SqlCommand> parameterBuilder) {
+
+            int rowAffected = 0;
+
+            await using (var Connection = _databaseConnectionFactory.CreateConnection()) {
+
+                await using (var Command = new SqlCommand(procedureName, Connection)) {
+
+                    Command.CommandType = CommandType.StoredProcedure;
+                    parameterBuilder(Command);
+
+                    try {
+
+                        await Connection.OpenAsync();
+                        object? result = await Command.ExecuteScalarAsync();
+
+                        if (result != null && result != DBNull.Value)
+                            rowAffected = Convert.ToInt32(result);
+                    }
+                    catch (Exception ex) {
+
+                        Console.Error.WriteLine($"[{typeof(T).Name}Repository][IsExist] Error: {ex}");
+                        throw;
+                    }
+                }
+            }
+
+            return rowAffected > 0;
+        }
 
         // Is Active method to check if a record is active based on a given condition
+        protected virtual async Task<bool> Active(string procedureName, string parameterName , object ParameterValue) {
+
+            int RowAffected = 0;
+
+            await using (var Connection = _databaseConnectionFactory.CreateConnection()) {
+
+                await using (var Command = new SqlCommand(procedureName, Connection)) {
+
+                    Command.CommandType = CommandType.StoredProcedure;
+                    Command.Parameters.AddWithValue(parameterName, ParameterValue ?? DBNull.Value);
+
+                    try {
+
+                        await Connection.OpenAsync();
+                        RowAffected = await Command.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception ex) {
+
+                        Console.Error.WriteLine($"[{typeof(T).Name}Repository][Active] Error: {ex}");
+                        throw;
+                    }
+                }
+            }
+
+            return RowAffected > 0;
+        }
     }
 }

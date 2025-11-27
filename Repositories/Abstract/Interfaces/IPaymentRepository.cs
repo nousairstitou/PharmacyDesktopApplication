@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModels;
 
 namespace Repositories.Abstract.Interfaces {
 
-    public class IPaymentRepository {
+    public interface IPaymentRepository {
 
-
-
+        Task<IEnumerable<PaymentViewModel>> GetAllPayments();
+        Task<Payment?> GetPaymentById(int? PaymentId);
     }
 }

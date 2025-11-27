@@ -4,21 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controlles\" />
-    <Folder Include="EventHandlers\" />
-    <Folder Include="Constants\" />
-    <Folder Include="Filtars\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="ViewDataLoad\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\PharmacyApplicationApi\PharmacyApplicationApi.fsproj" />
   </ItemGroup>
 
 </Project>

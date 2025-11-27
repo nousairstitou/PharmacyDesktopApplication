@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Abstract.Interfaces {
+namespace Business.Abstract.Common {
 
-    public interface IAddressRepository {
+    public interface IAddService<T> where T : class {
 
-
-
+        Task<int?> Add(T Entity);
     }
 }

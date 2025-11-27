@@ -10,29 +10,29 @@ namespace Models {
 
         public int PurchaseDetailId { get; set; }
 
-        private int? _purchaseId;
-        public int? PurchaseId {
+        private int _purchaseId;
+        public int PurchaseId {
  
             get => _purchaseId;
  
             set {
  
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("Purchase ID must be a positive integer or null.");
+                if (value <= 0)
+                    throw new ArgumentException("Purchase ID must be a positive integer.");
  
                 _purchaseId = value;
             }
         }
 
-        private int? _medicineId;
-        public int? MedicineId {
+        private int _medicineId;
+        public int MedicineId {
  
             get => _medicineId;
  
             set {
  
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("Medicine ID must be a positive integer or null.");
+                if (value <= 0)
+                    throw new ArgumentException("Medicine ID must be a positive integer.");
  
                 _medicineId = value;
             }

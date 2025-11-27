@@ -39,43 +39,43 @@ namespace Models {
             }
         }
 
-        private int? _categoryId;
-        public int? CategoryId {
+        private int _categoryId;
+        public int CategoryId {
 
             get => _categoryId;
 
             set { 
             
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("Category ID must be a positive integer or null.");
+                if (value <= 0)
+                    throw new ArgumentException("Category ID must be a positive integer.");
 
                 _categoryId = value;
             }
         }
 
-        private int? _supplierId;
-        public int? SupplierId {
+        private int _supplierId;
+        public int SupplierId {
 
             get => _supplierId;
 
             set { 
             
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("Supplier ID must be a positive integer or null.");
+                if (value <= 0)
+                    throw new ArgumentException("Supplier ID must be a positive integer.");
 
                 _supplierId = value;
             }
         }
 
-        private int? _inventoryId;
-        public int? InventoryId {
+        private int _inventoryId;
+        public int InventoryId {
 
             get => _inventoryId;
 
             set { 
             
                 if (value <= 0)
-                    throw new ArgumentException("Inventory ID must be a positive integer or null");
+                    throw new ArgumentException("Inventory ID must be a positive integer");
 
                 _inventoryId = value;
             }

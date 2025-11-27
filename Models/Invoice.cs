@@ -10,15 +10,15 @@ namespace Models {
 
         public int InvoiceId { get; set; }
 
-        private int? _purchaseId;
-        public int? PurchaseId {
+        private int _purchaseId;
+        public int PurchaseId {
 
             get => _purchaseId;
 
             set {
 
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("Purchase ID must be a positive integer or null.");
+                if (value <= 0)
+                    throw new ArgumentException("Purchase ID must be a positive integer.");
 
                 _purchaseId = value;
             }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Data.Repositories {
+namespace Business.DTOs.Response.Billing {
 
-    public class AddressRepository {
-
+    public sealed record GetBillingByIdResponse {
 
 
     }

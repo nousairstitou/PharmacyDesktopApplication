@@ -5,13 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewModels;
 
 namespace Repositories.Abstract.Interfaces {
 
-    public interface ICategoryRepository {
+    public interface ICategoryRepository :
+        IAddRepository<Category> , 
+        IUpdateRepository<Category> ,
+        IDeleteRepository<Category> {
 
-        Task<IEnumerable<Category>> GetAllCategories();
-        Task<Category> GetCategoryById(int? categoryId);
-        Task<Category> GetCategoryByName(string categoryName);
+        Task<IEnumerable<CategoryViewModel>> GetAllCategories();
+        Task<Category?> GetCategoryById(int? categoryId);
+        Task<bool> CategoryNameExists(string? CategoryName);
     }
 }

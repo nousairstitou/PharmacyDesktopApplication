@@ -54,33 +54,36 @@ namespace Models {
             }
         }
 
-        private decimal _totalAmount;
-        public decimal TotalAmount {
+        private decimal _amountPaid;
+        public decimal AmountPaid {
 
-            get => _totalAmount;
+            get => _amountPaid;
 
             set {
 
                 if(value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(TotalAmount) ,"Total Amount must be greater than zero.");
+                    throw new ArgumentOutOfRangeException(nameof(AmountPaid) , "Amount Paid must be greater than zero.");
 
-                _totalAmount = value;
+                _amountPaid = value;
             }
         }
 
-        private string? _note;
-        public string? Note {
+        private byte _status;
+        public byte Status {
 
-            get => _note;
+            get => _status;
 
             set {
 
-                if (value != null && value.Length > 255)
-                    throw new ArgumentException(nameof(Note) ,"Note cannot exceed 255 characters.");
+                if (value < 0 || value > 3)
+                    throw new ArgumentOutOfRangeException(nameof(Status), "Status must be between 0 and 3.");
 
-                _note = value;
+                _status = value;
             }
         }
+
+        public DateTime CreatedAt { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Sale Sale { get; private set; }
         public PaymentMethod PaymentMethod { get; set; }

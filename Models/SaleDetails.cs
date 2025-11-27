@@ -68,6 +68,8 @@ namespace Models {
             }
         }
 
+        public bool IsDeleted { get; set; } = false;
+
         public Sale sale { get; private set; }
         public Medicine medicine { get; private set; }
     }

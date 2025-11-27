@@ -8,6 +8,6 @@ namespace Repositories.Abstract.Common {
 
     public interface IAddRepository<T> where T : class {
 
-        Task<int?> Insert(T Entity);
+        Task<int?> Add(T Entity);
     }
 }

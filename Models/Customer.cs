@@ -10,5 +10,6 @@ namespace Models {
 
         // CustomerId is generated automatically by the database
         public int? CustomerId { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

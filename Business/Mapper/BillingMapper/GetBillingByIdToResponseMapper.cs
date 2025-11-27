@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Data.Mapper {
+namespace Business.Mapper.BillingMapper {
 
-    public class AddressMapper {
-
+    public sealed class GetBillingByIdToResponseMapper {
 
 
     }

@@ -13,22 +13,8 @@ namespace Models {
         // PersonId is generated automatically by the database
         public int? PersonId { get; set; }
 
-        private int? _addressId;
-        public int? AddressId {
-
-            get => _addressId;
-
-            set {
-
-                if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("AddressId must be a positive integer or null.");
-
-                _addressId = value;
-            }
-        }
-
-        private string? _name;
-        public string? Name {
+        private string _name = null!;
+        public string Name {
 
             get => _name;
             
@@ -44,8 +30,8 @@ namespace Models {
             }
         }
 
-        private string? _phone;
-        public string? Phone {
+        private string _phone = null!;
+        public string Phone {
 
             get => _phone;
             
@@ -75,6 +61,20 @@ namespace Models {
                     throw new ArgumentException(nameof(Email), "Invalid email format.");
 
                 _email = value;
+            }
+        }
+
+        private int? _addressId;
+        public int? AddressId {
+
+            get => _addressId;
+
+            set {
+
+                if (!value.HasValue || value <= 0)
+                    throw new ArgumentException("AddressId must be a positive integer or null.");
+
+                _addressId = value;
             }
         }
 

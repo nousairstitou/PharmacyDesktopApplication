@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Abstract.Common {
 
-    public interface IEntityMapper<T> where T : class {
+    public interface IEntityMapper<T> {
 
         T Map(SqlDataReader Reader);
     }
