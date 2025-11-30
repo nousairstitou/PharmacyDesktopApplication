@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace Business.Validation.SupplierValidation {
 
-    public class SupplierValidator : IServiceValidator<CreateSupplierRequest , UpdateSupplierRequest> {
+    public class SupplierValidator : IAddServiceValidator<CreateSupplierRequest> , 
+        IUpdateServiceValidator<UpdateSupplierRequest>, IDeleteServiceValidator {
 
         private readonly ISupplierRepository _SupplierRepository;
 
@@ -20,35 +21,41 @@ namespace Business.Validation.SupplierValidation {
             _SupplierRepository = SupplierRepository ?? throw new ArgumentNullException(nameof(SupplierRepository));
         }
 
-        public async Task ValidateCreate(CreateSupplierRequest request) {
+        public async Task<Result<CreateSupplierRequest>> ValidateCreate(CreateSupplierRequest request) {
 
             if (await _SupplierRepository.PhoneSupplierExists(request.SupplierPhone))
-                throw new ArgumentNullException("Supplier Number already Exists");
+                return Result<CreateSupplierRequest>.Failure("Supplier Number already Exists");
 
             if (await _SupplierRepository.PhoneSupplierExists(request.SupplierEmail))
-                throw new ArgumentNullException("Supplier Email already Exists");
+                return Result<CreateSupplierRequest>.Failure("Supplier Email already Exists");
+
+            return Result<CreateSupplierRequest>.Success(request);
         }
 
-        public async Task ValidateUpdate(UpdateSupplierRequest request) {
+        public async Task<Result<UpdateSupplierRequest>> ValidateUpdate(UpdateSupplierRequest request) {
             
             var Supplier = await _SupplierRepository.GetSupplierById(request.SupplierId);
 
             if(Supplier is null)
-                throw new ArgumentNullException("Supplier does not exist.");
+                return Result<UpdateSupplierRequest>.Failure("Supplier does not exist.");
 
             if (Supplier.IsDeleted)
-                throw new ArgumentNullException("Supplier already deleted.");
+                return Result<UpdateSupplierRequest>.Failure("Supplier already deleted.");
+
+            return Result<UpdateSupplierRequest>.Success(request);
         }
 
-        public async Task ValidateDelete(int SupplierId) {
+        public async Task<Result<bool>> ValidateDelete(int SupplierId) {
 
             var Supplier = await _SupplierRepository.GetSupplierById(SupplierId);
 
             if (Supplier is null)
-                throw new ArgumentNullException("Supplier does not exist.");
+                return Result<bool>.Failure("Supplier does not exist.");
 
-            if(Supplier.IsDeleted)
-                throw new ArgumentNullException("Supplier already deleted.");
+            if (Supplier.IsDeleted)
+                return Result<bool>.Failure("Supplier already deleted.");
+
+            return Result<bool>.Success(true);
         }
     }
 }

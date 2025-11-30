@@ -17,7 +17,7 @@ namespace Business.Abstract.Interfaces {
         IUpdateService<UpdateSupplierRequest>,
         IDeleteService {
 
-        Task<IEnumerable<SupplierViewModel>> GetAllSuppliers();
+        Task<GetAllSuppliersResponse> GetAllSuppliers();
         Task<GetSupplierByIdResponse?> GetSupplierById(int? SupplierId);
     }
 }

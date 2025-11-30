@@ -18,7 +18,7 @@ namespace Business.Mapper.SupplierMapper {
                 Name = request.SupplierName,
                 Phone = request.SupplierPhone,
                 Email = request.SupplierEmail,
-                AddressId = request.AddressId
+                Address = request.Address
             };
         }
     }

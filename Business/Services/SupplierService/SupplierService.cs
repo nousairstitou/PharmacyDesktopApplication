@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Business.Abstract.Common;
 using Business.Abstract.Interfaces;
+using Business.DTOs.Request.Sale;
 using Business.DTOs.Request.Supplier;
 using Business.DTOs.Response.Category;
 using Business.DTOs.Response.Supplier;
@@ -22,22 +23,28 @@ namespace Business.Services.SupplierService {
         private readonly IEntityMapper<CreateSupplierRequest, Supplier> _CreateEntityMapper;
         private readonly IEntityMapper<UpdateSupplierRequest, Supplier> _UpdateEntityMapper;
         private readonly IEntityToResponseMapper<GetSupplierByIdResponse, Supplier> _EntityToResponse;
-        private readonly IServiceValidator<CreateSupplierRequest , UpdateSupplierRequest> _SupplierValidator;
+        private readonly IAddServiceValidator<CreateSupplierRequest> _AddValidator;
+        private readonly IUpdateServiceValidator<UpdateSupplierRequest> _UpdateValidator;
+        private readonly IDeleteServiceValidator _DeleteValidator;
 
         public SupplierService(ISupplierRepository supplierRepository , IEntityMapper<CreateSupplierRequest, Supplier> CreateEntityMapper,
             IEntityMapper<UpdateSupplierRequest, Supplier> UpdateEntityMapper, IEntityToResponseMapper<GetSupplierByIdResponse, Supplier> EntityToResponse ,
-            IServiceValidator<CreateSupplierRequest, UpdateSupplierRequest> SupplierValidator) {
+            IAddServiceValidator<CreateSupplierRequest> AddValidator , IUpdateServiceValidator<UpdateSupplierRequest> UpdateValidator,
+            IDeleteServiceValidator DeleteValidator) {
             
             _supplierRepository = supplierRepository ?? throw new ArgumentNullException(nameof(supplierRepository));
             _CreateEntityMapper = CreateEntityMapper ?? throw new ArgumentNullException(nameof(CreateEntityMapper));
             _UpdateEntityMapper = UpdateEntityMapper ?? throw new ArgumentNullException(nameof(UpdateEntityMapper));
             _EntityToResponse = EntityToResponse ?? throw new ArgumentNullException(nameof(EntityToResponse));
-            _SupplierValidator = SupplierValidator ?? throw new ArgumentNullException(nameof(SupplierValidator));
+            _AddValidator = AddValidator ?? throw new ArgumentNullException(nameof(AddValidator));
+            _UpdateValidator = UpdateValidator ?? throw new ArgumentNullException(nameof(UpdateValidator));
+            _DeleteValidator = DeleteValidator ?? throw new ArgumentNullException(nameof(DeleteValidator));
         }
 
-        public async Task<IEnumerable<SupplierViewModel>> GetAllSuppliers() {
+        public async Task<GetAllSuppliersResponse> GetAllSuppliers() {
 
-            return await _supplierRepository.GetAllSuppliers();
+            var Supplier = await _supplierRepository.GetAllSuppliers();
+            return new GetAllSuppliersResponse(Supplier);
         }
 
         public async Task<GetSupplierByIdResponse?> GetSupplierById(int? SupplierId) {
@@ -48,19 +55,31 @@ namespace Business.Services.SupplierService {
 
         public async Task<int?> Add(CreateSupplierRequest request) {
 
-            await _SupplierValidator.ValidateCreate(request);
+            var result = await _AddValidator.ValidateCreate(request);
+
+            if (!result.IsSuccess)
+                return null;
+
             return await _supplierRepository.Add(_CreateEntityMapper.Map(request));
         }
 
         public async Task<bool> Update(int SupplierId, UpdateSupplierRequest request) {
 
-            await _SupplierValidator.ValidateUpdate(request);
+            var result = await _UpdateValidator.ValidateUpdate(request);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _supplierRepository.Update(SupplierId, _UpdateEntityMapper.Map(request));
         }
 
         public async Task<bool> Delete(int SupplierId) {
 
-            await _SupplierValidator.ValidateDelete(SupplierId);
+            var result = await _DeleteValidator.ValidateDelete(SupplierId);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _supplierRepository.Delete(SupplierId);
         }
     }

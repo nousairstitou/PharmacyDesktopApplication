@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Request.Inventory {
 
+    [Serializable]
     public sealed record CreateInventoryRequest {
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "InventoryName is required")]
+        [MaxLength(100, ErrorMessage = "InventoryName cannot exceed 100 characters")]
         public string InventoryName { get; init; } = null!;
 
-        [Required]
-        [MaxLength(255)]
-        public string Location { get; init; } = null!;
+        [Required(ErrorMessage = "Location is required")]
+        [MaxLength(255, ErrorMessage = "Location cannot exceed 255 characters")]
+        public string Location { get; init; }
 
         [Required]
         public int Capacity { get; init; }

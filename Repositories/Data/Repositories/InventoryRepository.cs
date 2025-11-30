@@ -56,5 +56,13 @@ namespace Repositories.Data.Repositories {
 
             return await Delete("sp_DeleteInventory", "@InventoryId" , InventoryId);
         }
+
+        public async Task<bool> LocationExists(string location) {
+
+            return await IsExist("sp_CheckInventoryLocationExists", parameter => {
+
+                parameter.Parameters.AddWithValue("@Location", location);
+            });
+        }
     }
 }

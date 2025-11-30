@@ -4,6 +4,7 @@ using Business.Abstract.Interfaces;
 using Business.DTOs.Request.Category;
 using Business.DTOs.Request.Customer;
 using Business.DTOs.Response.Category;
+using Business.Validation;
 using Business.Validation.CategoryValidation;
 using Models;
 using Repositories.Abstract.Interfaces;
@@ -37,9 +38,10 @@ namespace Business.Services.CategoryService {
             _CategoryValidator = CategoryValidator ?? throw new Exception(nameof(CategoryValidator));
         }
 
-        public async Task<IEnumerable<CategoryViewModel>> GetAllCategories() {
+        public async Task<GetAllCategoriesResponse> GetAllCategories() {
 
-            return await _CategoryRepository.GetAllCategories();
+            var Category = await _CategoryRepository.GetAllCategories();
+            return new GetAllCategoriesResponse(Category);
         }
         
         public async Task<GetCategoryByIdResponse?> GetCategoryById(int? CategoryId) {
@@ -50,19 +52,31 @@ namespace Business.Services.CategoryService {
 
         public async Task<int?> Add(CreateCategoryRequest request) {
 
-            await _CategoryValidator.ValidateCreate(request);
+            var result = await _CategoryValidator.ValidateCreate(request);
+
+            if (!result.IsSuccess)
+                return null;
+
             return await _CategoryRepository.Add(_CreateEntityMapper.Map(request));
         }
 
         public async Task<bool> Update(int CategoryId, UpdateCategoryRequest request) {
 
-            await _CategoryValidator.ValidateUpdate(request);
+            var result = await _CategoryValidator.ValidateUpdate(request);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _CategoryRepository.Update(CategoryId, _UpdateEntityMapper.Map(request));
         }
 
         public async Task<bool> Delete(int CategoryId) {
 
-            await _CategoryValidator.ValidateDelete(CategoryId);
+            var result = await _CategoryValidator.ValidateDelete(CategoryId);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _CategoryRepository.Delete(CategoryId);
         }
     }

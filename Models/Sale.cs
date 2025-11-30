@@ -10,14 +10,14 @@ namespace Models {
 
         public int? SaleId { get; set; }
 
-        private int? _customerId;
-        public int? CustomerId {
+        private int _customerId;
+        public int CustomerId {
 
             get => _customerId;
 
             set {
 
-                if(!value.HasValue || value <= 0)
+                if(value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(CustomerId), "Customer Id must be greater than zero.");
 
                 _customerId = value;

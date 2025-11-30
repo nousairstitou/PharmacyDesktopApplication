@@ -17,31 +17,31 @@ namespace Models {
         public string Name {
 
             get => _name;
-            
+
             set {
 
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException(nameof(Name),"Name cannot be null or empty.");
-
-                if (value.Length < 3)
-                    throw new ArgumentException(nameof(Name), "Name must be at least 3 characters long.");
+                if (string.IsNullOrWhiteSpace(_name))
+                    throw new ArgumentException(nameof(Name), "Name cannot be null or empty.");
 
                 _name = value;
             }
         }
 
-        private string _phone = null!;
+        private string _phone;
         public string Phone {
 
             get => _phone;
-            
+
             set {
 
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException(nameof(Phone), "Phone cannot be null or empty.");
 
-                if (value.Length < 10)
-                    throw new ArgumentException(nameof(Phone), "Phone must be at least 10 digits long.");
+                if(value.Length > 15 || value.Length < 10)
+                    throw new ArgumentException(nameof(Phone), "Phone number must be between 10 and 15 characters long.");
+
+                if (!Regex.IsMatch(value, @"^\+?[1-9]\d{1,14}$"))
+                    throw new ArgumentException(nameof(Phone), "Invalid phone number format.");
 
                 _phone = value;
             }
@@ -51,11 +51,8 @@ namespace Models {
         public string? Email {
 
             get => _email;
-            
-            set {
 
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException(nameof(Email) ,"Email cannot be null or empty.");
+            set {
 
                 if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                     throw new ArgumentException(nameof(Email), "Invalid email format.");
@@ -72,7 +69,7 @@ namespace Models {
             set {
 
                 if (!value.HasValue || value <= 0)
-                    throw new ArgumentException("AddressId must be a positive integer or null.");
+                    throw new ArgumentOutOfRangeException(nameof(AddressId), "Address ID must be a positive integer.");
 
                 _addressId = value;
             }

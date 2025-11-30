@@ -17,7 +17,7 @@ namespace Business.Abstract.Interfaces {
         IUpdateService<UpdateCustomerRequest> , 
         IDeleteService {
 
-        Task<IEnumerable<CustomerViewModel>> GetAllCustomers();
+        Task<GetAllCustomersResponse> GetAllCustomers();
         Task<GetCustomerByIdResponse?> GetCustomerById(int? CustomerId);
     }
 }

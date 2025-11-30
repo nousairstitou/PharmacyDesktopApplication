@@ -3,6 +3,7 @@ using Business.Abstract.Interfaces;
 using Business.DTOs.Request.Customer;
 using Business.DTOs.Response.Customer;
 using Business.Mapper.CustomerMapper;
+using Business.Validation;
 using Business.Validation.CustomerValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Models;
@@ -36,9 +37,10 @@ namespace Business.Services.CustomerService {
             _CustomerValidator = CustomerValidator ?? throw new ArgumentNullException(nameof(CustomerValidator));
         }
 
-        public async Task<IEnumerable<CustomerViewModel>> GetAllCustomers() {
+        public async Task<GetAllCustomersResponse> GetAllCustomers() {
 
-            return await _CustomerRepository.GetAllCustomers();
+            var Customers = await _CustomerRepository.GetAllCustomers();
+            return new GetAllCustomersResponse(Customers);
         }
 
         public async Task<GetCustomerByIdResponse?> GetCustomerById(int? CustomerId) {
@@ -49,19 +51,31 @@ namespace Business.Services.CustomerService {
 
         public async Task<int?> Add(CreateCustomerRequest request) {
 
-            await _CustomerValidator.ValidateCreate(request);
+            var result = await _CustomerValidator.ValidateCreate(request);
+
+            if (!result.IsSuccess)
+                return null;
+
             return await _CustomerRepository.Add(_CreateEntityMapper.Map(request));
         }
 
         public async Task<bool> Update(int CustomerId , UpdateCustomerRequest request) { 
             
-            await _CustomerValidator.ValidateUpdate(request);
+            var result = await _CustomerValidator.ValidateUpdate(request);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _CustomerRepository.Update(CustomerId, _UpdateEntityMapper.Map(request)); 
         }
 
         public async Task<bool> Delete(int CustomerId) {
             
-            await _CustomerValidator.ValidateDelete(CustomerId);
+            var result = await _CustomerValidator.ValidateDelete(CustomerId);
+
+            if (!result.IsSuccess)
+                return false;
+
             return await _CustomerRepository.Delete(CustomerId);
         }
     }

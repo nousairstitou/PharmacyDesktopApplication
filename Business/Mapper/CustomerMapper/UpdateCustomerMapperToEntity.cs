@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Mapper.CustomerMapper {
-    
+
     public sealed class UpdateCustomerMapperToEntity : IEntityMapper<UpdateCustomerRequest , Customer> {
 
         public Customer Map(UpdateCustomerRequest request) {

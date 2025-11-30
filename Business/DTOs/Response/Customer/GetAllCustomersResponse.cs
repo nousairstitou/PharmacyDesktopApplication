@@ -7,5 +7,5 @@ using ViewModels;
 
 namespace Business.DTOs.Response.Customer {
 
-    public sealed record GetAllCustomers(IEnumerable<CustomerViewModel> ViewModels);
+    public sealed record GetAllCustomersResponse(IEnumerable<CustomerViewModel> ViewModels);
 }

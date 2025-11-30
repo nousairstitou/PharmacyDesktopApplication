@@ -12,9 +12,4 @@
     <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapper\PaymentMapper\" />
-    <Folder Include="Services\PaymentService\" />
-  </ItemGroup>
-
 </Project>

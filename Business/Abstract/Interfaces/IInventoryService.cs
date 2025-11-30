@@ -16,7 +16,7 @@ namespace Business.Abstract.Interfaces {
         IUpdateService<UpdateInventoryRequest> ,
         IDeleteService {
 
-        Task<IEnumerable<InventoryViewModel>> GetAllInventories();
+        Task<GetAllInventoriesResponse> GetAllInventories();
         Task<GetInventoryByIdResponse?> GetInventoryById(int? InventoryId);
     }
 }

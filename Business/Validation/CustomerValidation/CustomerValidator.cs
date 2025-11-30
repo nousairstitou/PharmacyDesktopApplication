@@ -1,6 +1,10 @@
-﻿using Business.Abstract.Common;
+﻿using Azure.Core;
+using Business.Abstract.Common;
 using Business.Abstract.Interfaces;
+using Business.DTOs.Request.Category;
 using Business.DTOs.Request.Customer;
+using Business.DTOs.Request.Inventory;
+using Business.DTOs.Request.Supplier;
 using Business.DTOs.Response.Customer;
 using Microsoft.VisualBasic;
 using Models;
@@ -15,7 +19,8 @@ using ViewModels;
 
 namespace Business.Validation.CustomerValidation {
 
-    public class CustomerValidator : IServiceValidator<CreateCustomerRequest, UpdateCustomerRequest> {
+    public class CustomerValidator : IAddServiceValidator<CreateCustomerRequest>,
+        IUpdateServiceValidator<UpdateCustomerRequest>, IDeleteServiceValidator {
 
         private readonly ICustomerRepository _CustomerRepository;
         private readonly IPersonRepository _PersonRepository;
@@ -26,35 +31,41 @@ namespace Business.Validation.CustomerValidation {
             _PersonRepository = personRepo ?? throw new ArgumentNullException(nameof(personRepo));
         }
 
-        public async Task ValidateCreate(CreateCustomerRequest request) {
+        public async Task<Result<CreateCustomerRequest>> ValidateCreate(CreateCustomerRequest request) {
 
             if (await _PersonRepository.PhoneExists(request.Phone))
-                throw new ArgumentNullException("Phone already exists");
+                return Result<CreateCustomerRequest>.Failure("Phone already exists");
 
             if (await _PersonRepository.EmailExists(request.Email))
-                throw new ArgumentNullException("Email already exists");
+                return Result<CreateCustomerRequest>.Failure("Email already exists");
+
+            return Result<CreateCustomerRequest>.Success(request);
         }
 
-        public async Task ValidateUpdate(UpdateCustomerRequest request) {
+        public async Task<Result<UpdateCustomerRequest>> ValidateUpdate(UpdateCustomerRequest request) {
 
             var customer = await _CustomerRepository.GetCustomerById(request.CustomerId);
 
             if (customer is null)
-                throw new ArgumentNullException("Customer does not exist");
+                return Result<UpdateCustomerRequest>.Failure("Customer does not exist");
 
             if (customer.IsDeleted)
-                throw new ArgumentNullException("Customer is deleted");
+                return Result<UpdateCustomerRequest>.Failure("Customer is deleted");
+
+            return Result<UpdateCustomerRequest>.Success(request);
         }
 
-        public async Task ValidateDelete(int CustomerId) {
+        public async Task<Result<bool>> ValidateDelete(int CustomerId) {
 
             var customer = await _CustomerRepository.GetCustomerById(CustomerId);
 
             if (customer is null)
-                throw new ArgumentNullException("Customer does not exist");
+                return Result<bool>.Failure("Customer does not exist");
 
             if (customer.IsDeleted)
-                throw new ArgumentNullException("Customer already deleted");
+                return Result<bool>.Failure("Customer already deleted");
+
+            return Result<bool>.Success(true);
         }
     }
 }

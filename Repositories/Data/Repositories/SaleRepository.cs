@@ -36,12 +36,17 @@ namespace Repositories.Data.Repositories {
             return await GetByValue("sp_GetSaleByDate", "@SaleDate", SaleDate, _EntityMapper.Map);
         }
 
-        public async Task<int?> Add(Sale entity) {
+        public async Task<int?> Add(TransactionSale entity) {
 
             return await Insert("sp_AddSale" , "@NewSaleId" , Parameter => {
 
-                Parameter.Parameters.AddWithValue("@CustomerId" , entity.CustomerId);
-                Parameter.Parameters.AddWithValue("@Notes", entity.Note);
+                Parameter.Parameters.AddWithValue("@CustomerId" , entity.Sale?.CustomerId);
+                Parameter.Parameters.AddWithValue("@Notes", entity.Sale?.Note);
+                Parameter.Parameters.AddWithValue("@PaymentMethodId", entity.Payment?.PaymentMethodId);
+                Parameter.Parameters.AddWithValue("@AmountPaid", entity.Payment?.AmountPaid);
+                Parameter.Parameters.AddWithValue("@CreatedBy", entity.Billing?.CreatedBy);
+                Parameter.Parameters.AddWithValue("@BillingNote", entity.Billing?.Note);
+                Parameter.Parameters.AddWithValue("@Items", entity.SaleItems);
             });
         }
 

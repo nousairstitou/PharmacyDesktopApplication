@@ -20,7 +20,7 @@ namespace Business.Mapper.SupplierMapper {
                 SupplierName = supplier.Name,
                 SupplierPhone = supplier.Phone,
                 SupplierEmail = supplier.Email,
-                AddressId  = supplier.AddressId
+                Address  = supplier.Address
             };
         }
     }

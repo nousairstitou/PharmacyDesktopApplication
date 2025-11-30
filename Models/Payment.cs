@@ -12,28 +12,28 @@ namespace Models {
 
         public int? PaymentId { get; set; }
 
-        private int? _saleId;
-        public int? SaleId {
+        private int _saleId;
+        public int SaleId {
 
             get => _saleId;
 
             set {
 
-                if (!value.HasValue || value <= 0)
+                if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(SaleId),"Sale Id must be greater than zero.");
 
                 _saleId = value;
             }
         }
 
-        private int? _paymentMethodId;
-        public int? PaymentMethodId {
+        private int _paymentMethodId;
+        public int PaymentMethodId {
 
             get => _paymentMethodId;
 
             set {
 
-                if (!value.HasValue || value <= 0)
+                if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(PaymentMethodId),"PaymentMethod Id must be greater than zero.");
 
                 _paymentMethodId = value;

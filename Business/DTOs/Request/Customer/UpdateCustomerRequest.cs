@@ -7,20 +7,23 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Request.Customer {
 
+    [Serializable]
     public sealed record UpdateCustomerRequest {
 
         public int CustomerId { get; init; }
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Name is required")]
+        [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
         public string Name { get; init; } = null!;
 
-        [Required]
-        [MaxLength(15)]
+        [Required(ErrorMessage = "Phone is required")]
+        [MaxLength(15, ErrorMessage = "Phone cannot exceed 15 characters")]
         public string Phone { get; init; } = null!;
 
-        [MaxLength(100)]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        [MaxLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
         public string? Email { get; init; }
+
         public int? AddressId { get; init; }
     }
 }

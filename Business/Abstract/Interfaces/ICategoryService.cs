@@ -18,7 +18,7 @@ namespace Business.Abstract.Interfaces {
         IUpdateService<UpdateCategoryRequest>,
         IDeleteService {
 
-        Task<IEnumerable<CategoryViewModel>> GetAllCategories();
+        Task<GetAllCategoriesResponse> GetAllCategories();
         Task<GetCategoryByIdResponse?> GetCategoryById(int? CustomerId);
     }
 }

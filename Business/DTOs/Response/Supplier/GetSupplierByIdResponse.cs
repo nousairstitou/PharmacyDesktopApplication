@@ -13,6 +13,6 @@ namespace Business.DTOs.Response.Supplier {
         public string SupplierName { get; init; } = string.Empty;
         public string SupplierPhone { get; init; } = string.Empty;
         public string? SupplierEmail { get; init; }
-        public int? AddressId { get; init; }
+        public string Address { get; init; } = string.Empty;
     }
 }

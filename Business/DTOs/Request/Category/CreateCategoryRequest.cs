@@ -7,16 +7,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Business.DTOs.Request.Category {
 
+    [Serializable]
     public sealed record CreateCategoryRequest {
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "CategoryName is required")]
+        [MaxLength(100, ErrorMessage = "CategoryName cannot exceed 100 characters")]
         public string CategoryName { get; init; } = null!;
-        
-        [Required]
+
+        [Required(ErrorMessage = "IsActive is required")]
         public bool IsActive { get; init; }
-       
-        [Required]
+
+        [Required(ErrorMessage = "CreatedBy is required")]
         public int CreatedBy { get; init; }
 
         [MaxLength(255)]

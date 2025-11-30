@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "ViewModels\Vi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{A5FDE4A7-D8BE-4948-99E0-DE04A2EE922D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PharmacyApplicationApi", "PharmacyApplicationApi\PharmacyApplicationApi.fsproj", "{CFC7D149-18FC-4317-AD28-21F67EEA8E57}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{A5FDE4A7-D8BE-4948-99E0-DE04A2EE922D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5FDE4A7-D8BE-4948-99E0-DE04A2EE922D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5FDE4A7-D8BE-4948-99E0-DE04A2EE922D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFC7D149-18FC-4317-AD28-21F67EEA8E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFC7D149-18FC-4317-AD28-21F67EEA8E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFC7D149-18FC-4317-AD28-21F67EEA8E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFC7D149-18FC-4317-AD28-21F67EEA8E57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

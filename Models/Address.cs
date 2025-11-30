@@ -11,8 +11,8 @@ namespace Models {
 
         public int? AddressId { get; set; }
 
-        private string? _city;
-        public string? City {
+        private string _city;
+        public string City {
 
             get => _city;
 
@@ -25,8 +25,8 @@ namespace Models {
             }
         }
 
-        private string? _street;
-        public string? Street {
+        private string _street;
+        public string Street {
 
             get => _street;
 
@@ -39,14 +39,14 @@ namespace Models {
             }
         }
 
-        private int? _buildingNumber;
-        public int? BuildingNumber {
+        private int _buildingNumber;
+        public int BuildingNumber {
 
             get => _buildingNumber;
 
             set {
 
-                if (!value.HasValue || value <= 0)
+                if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(BuildingNumber) ,"Building Number must be a positive integer.");
 
                 _buildingNumber = value;
@@ -67,8 +67,8 @@ namespace Models {
             }
         }
 
-        private string? _zipCode;
-        public string? ZipCode {
+        private string _zipCode;
+        public string ZipCode {
 
             get => _zipCode;
 

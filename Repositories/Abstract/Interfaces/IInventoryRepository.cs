@@ -15,5 +15,6 @@ namespace Repositories.Abstract.Interfaces {
 
         Task<IEnumerable<InventoryViewModel>> GetAllInventories();
         Task<Inventory?> GetInventoryById(int? InventoryId);
+        Task<bool> LocationExists(string location);
     }
 }

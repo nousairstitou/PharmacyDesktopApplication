@@ -9,10 +9,9 @@ namespace Models {
     public class TransactionSale {
 
         public Sale? Sale { get; set; }
-        public PaymentMethod? PaymentMethod { get; set; }
         public Payment? Payment { get; set; }
         public Billing? Billing { get; set; }
 
-        public List<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
+        public List<SaleItem> SaleItems { get; set; } = new();
     }
 }

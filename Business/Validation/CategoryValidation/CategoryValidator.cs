@@ -1,6 +1,8 @@
 ﻿using Azure.Core;
 using Business.Abstract.Common;
 using Business.DTOs.Request.Category;
+using Business.DTOs.Request.Inventory;
+using Business.DTOs.Request.Supplier;
 using Repositories.Abstract.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace Business.Validation.CategoryValidation {
     
-    public class CategoryValidator : IServiceValidator<CreateCategoryRequest , UpdateCategoryRequest> {
+    public class CategoryValidator : IAddServiceValidator<CreateCategoryRequest>,
+        IUpdateServiceValidator<UpdateCategoryRequest>, IDeleteServiceValidator {
 
         private readonly ICategoryRepository _CategoryRepository;
 
@@ -19,32 +22,38 @@ namespace Business.Validation.CategoryValidation {
             CategoryRepository = CategoryRepository ?? throw new ArgumentNullException(nameof(CategoryRepository));
         }
 
-        public async Task ValidateCreate(CreateCategoryRequest request) {
+        public async Task<Result<CreateCategoryRequest>> ValidateCreate(CreateCategoryRequest request) {
 
             if(await _CategoryRepository.CategoryNameExists(request.CategoryName))
-                throw new ArgumentNullException("Category name already exists.");
+                return Result<CreateCategoryRequest>.Failure("Category name already exists.");
+
+            return Result<CreateCategoryRequest>.Success(request);
         }
 
-        public async Task ValidateUpdate(UpdateCategoryRequest request) {
+        public async Task<Result<UpdateCategoryRequest>> ValidateUpdate(UpdateCategoryRequest request) {
 
             var category = await _CategoryRepository.GetCategoryById(request.CategoryId);
 
             if (category is null)
-                throw new ArgumentNullException("Category does not exist.");
+                return Result<UpdateCategoryRequest>.Failure("Category does not exist.");
 
-            if (category.IsDeleted)
-                throw new ArgumentNullException("Category is deleted.");
+            if (!category.IsActive)
+                return Result<UpdateCategoryRequest>.Failure("Category already Deactivated.");
+
+            return Result<UpdateCategoryRequest>.Success(request);
         }
 
-        public async Task ValidateDelete(int CategoryId) {
+        public async Task<Result<bool>> ValidateDelete(int CategoryId) {
 
             var category = await _CategoryRepository.GetCategoryById(CategoryId);
 
             if (category is null)
-                throw new ArgumentNullException("Category does not exist.");
+                return Result<bool>.Failure("Category does not exist.");
 
-            if (category.IsDeleted)
-                throw new ArgumentNullException("Category already deleted.");
+            if (!category.IsActive)
+                return Result<bool>.Failure("Category already Deactivated.");
+
+            return Result<bool>.Success(true);
         }
     }
 }
